@@ -1,0 +1,6 @@
+/api/data
+| parse regex "response_time=(?<response_ms>\\d+)"
+| where response_ms > 3000
+| timeslice 10m
+| count as slow_count by _timeslice
+| where slow_count > 5
